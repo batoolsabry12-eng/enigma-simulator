@@ -1,174 +1,120 @@
 /*************************************************
- * Enigma Simulator (Plugboard Removed)
- * - 3 rotors + reflector + stepping
- * - Encrypt = Decrypt (same keys)
- * - Cute extras: Rotor Window + Random Keys
+ * Enigma Simulator (Clean Version)
+ * - No plugboard
+ * - No random keys
+ * - Rotor stepping = state transitions
  *************************************************/
 
 const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-// Enigma I rotors (fixed wiring)
+// Rotor wirings
 const rotor1 = "EKMFLGDQVZNTOWYHXUSPAIBRCJ";
 const rotor2 = "AJDKSIRUXBLHWTMCQGZNPYFVOE";
 const rotor3 = "BDFHJLCPRTXVZNYEIWGAKMUSQO";
 const reflector = "YRUHQSLDPXNGOKMIEBFZCWVJAT";
 
-// Small helper to get elements
 function $(id) {
   return document.getElementById(id);
 }
 
-/** Rotate a letter by offset (0..25). Wraps around A..Z */
+/* Rotate letter by offset */
 function rotate(offset, letter) {
   return alphabet[(alphabet.indexOf(letter) + offset + 26) % 26];
 }
 
-/** Forward pass through rotor with an offset */
+/* Forward rotor pass */
 function rotorForward(rotor, offset, letter) {
   const stepped = rotate(offset, letter);
   const encoded = rotor[alphabet.indexOf(stepped)];
   return rotate(-offset, encoded);
 }
 
-/** Backward pass through rotor (reverse lookup) with an offset */
+/* Backward rotor pass */
 function rotorBackward(rotor, offset, letter) {
   const stepped = rotate(offset, letter);
-  const idx = rotor.indexOf(stepped);          // reverse mapping
-  const decoded = alphabet[idx];
-  return rotate(-offset, decoded);
+  const index = rotor.indexOf(stepped);
+  return rotate(-offset, alphabet[index]);
 }
 
-/** Update rotor window letters (optional UI element) */
+/* Update visible rotor letters (cute + meaningful) */
 function updateRotorWindow(k1, k2, k3) {
-  // These ids only exist if you added the rotor window in HTML.
-  if ($("rw1")) $("rw1").innerText = alphabet[(k1 + 26) % 26];
-  if ($("rw2")) $("rw2").innerText = alphabet[(k2 + 26) % 26];
-  if ($("rw3")) $("rw3").innerText = alphabet[(k3 + 26) % 26];
+  if ($("rw1")) $("rw1").innerText = alphabet[k1];
+  if ($("rw2")) $("rw2").innerText = alphabet[k2];
+  if ($("rw3")) $("rw3").innerText = alphabet[k3];
 }
 
-/** Main function: encrypt/decrypt message */
+/* Main encrypt/decrypt function */
 function processMessage() {
-  // Read keys (0..25)
-  let key1 = parseInt($("k1")?.value || "0", 10);
-  let key2 = parseInt($("k2")?.value || "0", 10);
-  let key3 = parseInt($("k3")?.value || "0", 10);
+  let k1 = parseInt($("k1").value || "0") % 26;
+  let k2 = parseInt($("k2").value || "0") % 26;
+  let k3 = parseInt($("k3").value || "0") % 26;
 
-  // Normalize keys
-  key1 = (key1 + 26) % 26;
-  key2 = (key2 + 26) % 26;
-  key3 = (key3 + 26) % 26;
+  const message = $("inputText").value.toUpperCase();
+  let output = "";
 
-  // Read message
-  const message = ($("inputText")?.value || "").toUpperCase();
-
-  let result = "";
-
-  for (const ch of message) {
-    // Keep spaces/symbols as-is
-    if (!alphabet.includes(ch)) {
-      result += ch;
+  for (const char of message) {
+    if (!alphabet.includes(char)) {
+      output += char;
       continue;
     }
 
-    let c = ch;
+    let c = char;
 
-    // Forward rotors (Right -> Left)
-    c = rotorForward(rotor3, key3, c);
-    c = rotorForward(rotor2, key2, c);
-    c = rotorForward(rotor1, key1, c);
+    // Forward
+    c = rotorForward(rotor3, k3, c);
+    c = rotorForward(rotor2, k2, c);
+    c = rotorForward(rotor1, k1, c);
 
-    // Reflector
+    // Reflect
     c = reflector[alphabet.indexOf(c)];
 
-    // Backward rotors (Left -> Right)
-    c = rotorBackward(rotor1, key1, c);
-    c = rotorBackward(rotor2, key2, c);
-    c = rotorBackward(rotor3, key3, c);
+    // Backward
+    c = rotorBackward(rotor1, k1, c);
+    c = rotorBackward(rotor2, k2, c);
+    c = rotorBackward(rotor3, k3, c);
 
-    result += c;
+    output += c;
 
-    // Stepping (Right rotor steps every letter)
-    key3 = (key3 + 1) % 26;
-    if (key3 === 0) key2 = (key2 + 1) % 26;
-    if (key2 === 0) key1 = (key1 + 1) % 26;
+    // Rotor stepping (state transition)
+    k3 = (k3 + 1) % 26;
+    if (k3 === 0) k2 = (k2 + 1) % 26;
+    if (k2 === 0) k1 = (k1 + 1) % 26;
 
-    // Live update rotor window (if you added it)
-    updateRotorWindow(key1, key2, key3);
+    updateRotorWindow(k1, k2, k3);
   }
 
-  // Write output
-  if ($("output")) {
-    // Works if output is a <textarea id="output">
-    $("output").value = result;
-  }
-
-  // Final window update
-  updateRotorWindow(key1, key2, key3);
-
-  // Optional status message
-  if ($("status")) $("status").innerText = "✅ Done";
+  $("output").value = output;
+  updateRotorWindow(k1, k2, k3);
 }
 
-/** Swap input/output (useful for decrypt demo) */
+/* Utilities */
 function swapText() {
-  const msg = $("inputText");
-  const out = $("output");
-  if (!msg || !out) return;
-
-  const temp = msg.value;
-  msg.value = out.value;
-  out.value = temp;
-
-  if ($("status")) $("status").innerText = "🔁 Swapped";
+  const temp = $("inputText").value;
+  $("inputText").value = $("output").value;
+  $("output").value = temp;
 }
 
-/** Clear both boxes */
 function clearAll() {
-  if ($("inputText")) $("inputText").value = "";
-  if ($("output")) $("output").value = "";
-  if ($("status")) $("status").innerText = "";
+  $("inputText").value = "";
+  $("output").value = "";
 }
 
-/** Copy output to clipboard */
 function copyOutput() {
-  const out = $("output");
-  if (!out) return;
-
-  out.select();
-  out.setSelectionRange(0, 999999);
+  $("output").select();
   document.execCommand("copy");
-
-  if ($("status")) $("status").innerText = "📋 Copied!";
 }
 
-/** Cute extra: Randomize keys */
-function randomizeKeys() {
-  const r = () => Math.floor(Math.random() * 26);
-
-  if ($("k1")) $("k1").value = r();
-  if ($("k2")) $("k2").value = r();
-  if ($("k3")) $("k3").value = r();
-
-  updateRotorWindow(
-    parseInt($("k1").value, 10),
-    parseInt($("k2").value, 10),
-    parseInt($("k3").value, 10)
-  );
-
-  if ($("status")) $("status").innerText = "🎲 Keys randomized";
-}
-
-/* Expose functions to onclick buttons (IMPORTANT) */
+/* Expose functions to HTML */
 window.processMessage = processMessage;
 window.swapText = swapText;
 window.clearAll = clearAll;
 window.copyOutput = copyOutput;
-window.randomizeKeys = randomizeKeys;
 
-/* Initialize rotor window on load (if present) */
-window.addEventListener("DOMContentLoaded", () => {
-  const k1 = parseInt($("k1")?.value || "0", 10);
-  const k2 = parseInt($("k2")?.value || "0", 10);
-  const k3 = parseInt($("k3")?.value || "0", 10);
-  updateRotorWindow(k1, k2, k3);
-});
+/* Init rotor window on load */
+window.onload = () => {
+  updateRotorWindow(
+    parseInt($("k1").value || "0"),
+    parseInt($("k2").value || "0"),
+    parseInt($("k3").value || "0")
+  );
+};
