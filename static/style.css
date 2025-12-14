@@ -974,3 +974,33 @@ textarea:focus {
 .status {
   color: var(--burgundy-main) !important;
 }
+.rotor-window{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-top:12px;
+  flex-wrap:wrap;
+}
+
+.rw-label{
+  font-weight:700;
+}
+
+.rw-box{
+  display:inline-grid;
+  place-items:center;
+  width:34px;
+  height:34px;
+  border-radius:10px;
+  border:1px solid rgba(0,0,0,0.15);
+  background: rgba(255,255,255,0.6);
+  font-weight:900;
+  letter-spacing:1px;
+}
+
+.btn.mini{
+  padding:8px 10px;
+  border-radius:10px;
+  font-size:13px;
+}
+
