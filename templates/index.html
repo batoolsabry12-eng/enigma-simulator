@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Enigma Encryption Simulator</title>
+
+  <!-- Your existing CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <div class="page">
+
+    <!-- ===== HEADER ===== -->
+    <header class="top">
+      <div class="brand">
+
+        <!-- Kaito Kid Logo -->
+        <div class="logo">
+          <img src="{{ url_for('static', filename='kaitokid.png') }}"
+               alt="Kaito Kid Hat">
+        </div>
+
+        <div class="title">
+          <h1>Enigma Encryption Simulator</h1>
+          <p>
+            Inspired by <em>The Imitation Game</em> •
+            Rotor-based encryption (Encrypt = Decrypt)
+          </p>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- ===== MAIN CARD ===== -->
+    <main class="card">
+
+      <h2>Machine Settings</h2>
+
+      <!-- Rotor Keys -->
+      <div class="grid">
+        <div class="field">
+          <label for="k1">Key 1 (Rotor I)</label>
+          <input id="k1" type="number" min="0" max="25" value="0">
+          <small>0 = A, 1 = B, … 25 = Z</small>
+        </div>
+
+        <div class="field">
+          <label for="k2">Key 2 (Rotor II)</label>
+          <input id="k2" type="number" min="0" max="25" value="0">
+          <small>Middle rotor</small>
+        </div>
+
+        <div class="field">
+          <label for="k3">Key 3 (Rotor III)</label>
+          <input id="k3" type="number" min="0" max="25" value="0">
+          <small>Right rotor (steps each letter)</small>
+        </div>
+      </div>
+
+      <!-- Plugboard -->
+      <div class="field">
+        <label for="plugboard">Plugboard (optional)</label>
+        <input id="plugboard" class="plugboard-input"
+       type="text" placeholder="Example: AG TZ MN">
+
+        <small>Space-separated pairs (each letter only once)</small>
+      </div>
+
+      <!-- INPUT / OUTPUT SIDE BY SIDE -->
+      <div class="io-grid">
+
+        <!-- Input -->
+        <div class="field">
+          <label for="inputText">Message</label>
+          <textarea id="inputText" rows="6"
+            placeholder="Type your message here (try HELLO)"></textarea>
+        </div>
+
+        <!-- Output -->
+        <div class="field">
+          <label for="output">Output</label>
+          <textarea id="output" rows="6" readonly></textarea>
+        </div>
+
+      </div>
+
+      <!-- Buttons -->
+      <div class="buttons">
+        <button class="btn primary" type="button"
+                onclick="processMessage()">
+          Encrypt / Decrypt
+        </button>
+
+        <button class="btn" type="button"
+                onclick="swapText()">
+          Swap In / Out
+        </button>
+
+        <button class="btn" type="button"
+                onclick="clearAll()">
+          Clear
+        </button>
+
+        <button class="btn" type="button"
+                onclick="copyOutput()">
+          Copy Output
+        </button>
+      </div>
+
+      <!-- Status -->
+      <p id="status" class="status"></p>
+
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="foot">
+      <span>
+        Tip: Encrypt → Swap In/Out → Encrypt again using the same keys to decrypt.
+      </span>
+    </footer>
+
+  </div>
+
+  <!-- Enigma JavaScript Logic -->
+  <script src="{{ url_for('static', filename='script.js') }}"></cript>
+
+</body>
+</html>

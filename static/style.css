@@ -1,0 +1,976 @@
+:root{
+  --bg:#0b1220;
+  --card:#0f1b33cc;
+  --border:#23375f;
+  --text:#e7eefc;
+  --muted:#9db3d6;
+  --accent:#38bdf8;
+  --good:#22c55e;
+  --warn:#f59e0b;
+  --shadow: 0 18px 60px rgba(0,0,0,.45);
+  --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  --sans: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:var(--sans);
+  color:var(--text);
+  background: radial-gradient(1100px 650px at 20% 10%, #152b55 0%, rgba(21,43,85,0) 55%),
+              radial-gradient(900px 600px at 80% 0%, #1f3b76 0%, rgba(31,59,118,0) 55%),
+              var(--bg);
+  min-height:100vh;
+}
+
+.bg-glow{
+  position:fixed;
+  inset:-200px;
+  background: radial-gradient(600px 400px at 40% 50%, rgba(56,189,248,.25), transparent 60%),
+              radial-gradient(700px 500px at 70% 30%, rgba(34,197,94,.14), transparent 60%);
+  pointer-events:none;
+  filter: blur(6px);
+  opacity:.8;
+}
+
+.header{
+  display:flex;
+  gap:18px;
+  align-items:center;
+  justify-content:space-between;
+  padding:26px 22px 12px;
+  max-width:1200px;
+  margin:0 auto;
+}
+
+.brand{
+  display:flex;
+  gap:14px;
+  align-items:center;
+}
+.logo{
+  width:46px;height:46px;
+  display:grid;place-items:center;
+  border:1px solid var(--border);
+  border-radius:14px;
+  background: linear-gradient(180deg, rgba(56,189,248,.18), rgba(56,189,248,0));
+  box-shadow: var(--shadow);
+  font-size:22px;
+}
+h1{
+  margin:0;
+  font-size:22px;
+  letter-spacing:.2px;
+}
+.sub{
+  margin:4px 0 0;
+  color:var(--muted);
+  font-size:13px;
+}
+
+.rotor-windows{
+  display:flex;
+  gap:10px;
+}
+.window{
+  border:1px solid var(--border);
+  background: linear-gradient(180deg, rgba(15,27,51,.75), rgba(15,27,51,.35));
+  border-radius:16px;
+  padding:10px 12px;
+  min-width:110px;
+  text-align:center;
+  box-shadow: var(--shadow);
+}
+.window .label{
+  font-size:11px;
+  color:var(--muted);
+}
+.window .letter{
+  font-family:var(--mono);
+  font-size:28px;
+  margin-top:6px;
+  color:var(--accent);
+  letter-spacing:2px;
+}
+
+.grid{
+  max-width:1200px;
+  margin:0 auto;
+  padding:12px 22px 28px;
+  display:grid;
+  grid-template-columns: 1.2fr .8fr;
+  gap:14px;
+}
+.card{
+  background: var(--card);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:16px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(10px);
+}
+.card.wide{
+  grid-column: 1 / -1;
+}
+
+h2{
+  margin:0 0 12px;
+  font-size:16px;
+  letter-spacing:.2px;
+}
+
+.row{
+  display:grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap:10px;
+  margin-bottom:10px;
+}
+
+.field label{
+  display:block;
+  font-size:12px;
+  color:var(--muted);
+  margin-bottom:6px;
+}
+.field small{
+  display:block;
+  font-size:11px;
+  color:rgba(157,179,214,.85);
+  margin-top:6px;
+}
+
+input, textarea{
+  width:100%;
+  border:1px solid #2a4474;
+  background: rgba(9,15,27,.55);
+  color:var(--text);
+  border-radius:12px;
+  padding:10px 12px;
+  outline:none;
+  font-size:14px;
+}
+input:focus, textarea:focus{
+  border-color: rgba(56,189,248,.75);
+  box-shadow: 0 0 0 4px rgba(56,189,248,.12);
+}
+
+textarea{
+  min-height:120px;
+  resize:vertical;
+  font-family:var(--mono);
+  letter-spacing:.4px;
+}
+
+.actions{
+  display:flex;
+  gap:10px;
+  margin-top:12px;
+  flex-wrap:wrap;
+}
+.btn{
+  border:none;
+  border-radius:12px;
+  padding:10px 14px;
+  font-weight:650;
+  cursor:pointer;
+  background: linear-gradient(180deg, rgba(56,189,248,.95), rgba(56,189,248,.65));
+  color:#061321;
+}
+.btn:hover{ filter:brightness(1.03) }
+.btn.ghost{
+  background: rgba(255,255,255,.06);
+  color: var(--text);
+  border:1px solid rgba(255,255,255,.12);
+}
+
+.status{
+  margin-top:12px;
+  font-size:13px;
+  color: var(--muted);
+}
+
+.output-box{
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:16px;
+  padding:14px;
+  background: rgba(0,0,0,.20);
+}
+.mono{
+  font-family:var(--mono);
+  font-size:20px;
+  color: var(--accent);
+  white-space: pre-wrap;
+  word-break: break-word;
+  letter-spacing:.6px;
+  min-height:52px;
+}
+.mini-actions{
+  display:flex;
+  gap:10px;
+  margin-top:10px;
+}
+.chip{
+  border:1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.06);
+  color: var(--text);
+  border-radius:999px;
+  padding:8px 12px;
+  cursor:pointer;
+}
+.chip:hover{ background: rgba(255,255,255,.09) }
+
+.note{
+  margin-top:12px;
+  color:rgba(231,238,252,.85);
+  font-size:13px;
+  line-height:1.35;
+}
+
+.trace-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+.toggle{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  color:var(--muted);
+  font-size:13px;
+  user-select:none;
+}
+.toggle input{ width:auto; }
+
+.trace-wrap{
+  margin-top:10px;
+  overflow:auto;
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:16px;
+  background: rgba(0,0,0,.18);
+}
+.trace{
+  width:100%;
+  border-collapse: collapse;
+  font-family: var(--mono);
+  font-size:12px;
+}
+.trace th, .trace td{
+  padding:10px 10px;
+  border-bottom:1px solid rgba(255,255,255,.08);
+  text-align:center;
+}
+.trace th{
+  position: sticky;
+  top: 0;
+  background: rgba(15,27,51,.85);
+  backdrop-filter: blur(10px);
+  color: rgba(231,238,252,.9);
+  font-weight: 700;
+}
+.muted{
+  color: rgba(157,179,214,.85);
+  text-align:center;
+}
+
+.footer{
+  max-width:1200px;
+  margin:0 auto;
+  padding:10px 22px 24px;
+  color: rgba(157,179,214,.9);
+  font-size:13px;
+}
+
+@media (max-width: 980px){
+  .grid{ grid-template-columns: 1fr; }
+  .row{ grid-template-columns: 1fr; }
+  .rotor-windows{ display:none; }
+}
+.header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+/* Icon container */
+.logo {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  background: linear-gradient(145deg, #0f2a44, #081a2d);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 12px rgba(56,189,248,.25);
+}
+
+/* Hat image */
+.logo img {
+  width: 26px;      /* 👈 SMALL SIZE */
+  height: auto;
+  filter: drop-shadow(0 0 4px rgba(56,189,248,.6));
+}
+
+/* Title text */
+.title h1 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.title p {
+  margin: 2px 0 0;
+  font-size: 13px;
+  opacity: .75;
+}
+.page{
+  width: min(880px, 90vw);   /* ⬅️ smaller than before */
+  margin: 28px auto 40px;
+}
+.io-grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;  /* left + right */
+  gap: 16px;
+  margin-top: 12px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+.plugboard-input {
+  width: 60%;
+  max-width: 420px;
+}
+/* ===============================
+   THE IMITATION GAME – BEIGE THEME
+   =============================== */
+
+:root {
+  /* Backgrounds */
+  --beige-bg: #f3efe6;        /* paper beige */
+  --beige-panel: #f9f6f0;     /* card background */
+  --beige-soft: #e8e1d4;      /* subtle borders */
+
+  /* Text */
+  --text-main: #2b2b2b;       /* dark ink */
+  --text-muted: #6b6b6b;
+
+  /* Brass accents */
+  --brass-main: #b08b36;      /* aged brass */
+  --brass-soft: #d6bf7a;
+  --brass-dark: #8e6f2a;
+}
+
+/* Page background */
+body {
+  background: var(--beige-bg);
+  color: var(--text-main);
+}
+
+/* Main card */
+.card {
+  background: var(--beige-panel);
+  border: 1px solid var(--beige-soft);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+}
+
+/* Headings */
+h1, h2 {
+  color: var(--text-main);
+}
+
+h2 {
+  position: relative;
+  margin-bottom: 18px;
+}
+
+h2::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 55px;
+  height: 2px;
+  background: var(--brass-main);
+}
+
+/* Inputs */
+input, textarea {
+  background: #ffffff;
+  color: var(--text-main);
+  border: 1px solid var(--beige-soft);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-muted);
+}
+
+/* Input focus */
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--brass-main);
+  box-shadow: 0 0 5px rgba(176, 139, 54, 0.5);
+}
+
+/* Primary button */
+.btn.primary {
+  background: var(--brass-main);
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.btn.primary:hover {
+  background: var(--brass-dark);
+}
+
+/* Secondary buttons */
+.btn {
+  background: #e6decd;
+  color: var(--text-main);
+  border: 1px solid var(--beige-soft);
+}
+
+.btn:hover {
+  background: #ded4bd;
+}
+
+/* Status text */
+.status {
+  color: var(--brass-dark);
+}
+
+/* Kaito logo subtle brass glow */
+.logo img {
+  height: 36px;
+  filter: drop-shadow(0 0 3px rgba(176, 139, 54, 0.5));
+}
+/* =========================================
+   FINAL POLISH – PAPER + BRASS + TYPEWRITER
+   ========================================= */
+
+/* Paper texture background (no image) */
+body {
+  background-color: var(--beige-bg);
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      rgba(0,0,0,0.015),
+      rgba(0,0,0,0.015) 1px,
+      transparent 1px,
+      transparent 3px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(0,0,0,0.01),
+      rgba(0,0,0,0.01) 1px,
+      transparent 1px,
+      transparent 4px
+    );
+}
+
+/* Typewriter / document font feel */
+body,
+input,
+textarea,
+button {
+  font-family: "Courier New", Courier, monospace;
+}
+
+/* Headings slightly more formal */
+h1 {
+  font-size: 26px;
+  letter-spacing: 0.5px;
+}
+
+h2 {
+  font-size: 18px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Brass divider between sections */
+.card::after {
+  content: "";
+  display: block;
+  margin-top: 18px;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--brass-main),
+    transparent
+  );
+}
+
+/* Brass separators for input/output */
+.field {
+  padding-bottom: 6px;
+  border-bottom: 1px dashed rgba(176, 139, 54, 0.35);
+}
+
+.field:last-child {
+  border-bottom: none;
+}
+
+/* Slight aged-paper feel for textareas */
+textarea {
+  background: #fffdfa;
+}
+
+/* Buttons feel like mechanical switches */
+.btn {
+  letter-spacing: 0.5px;
+}
+
+/* Output box slightly emphasized */
+#output {
+  background: #fdfbf6;
+  border: 1px solid rgba(176, 139, 54, 0.45);
+}
+
+/* Subtle mechanical feel on hover */
+.btn:hover {
+  transform: translateY(-1px);
+}
+/* =========================================
+   FORCE OVERRIDE – REMOVE ALL BLUE STYLES
+   (Place at VERY END of style.css)
+   ========================================= */
+
+/* Logo container – remove blue background */
+.logo {
+  background: var(--beige-panel) !important;
+  border: 1px solid var(--beige-soft) !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+}
+
+/* Logo image – remove blue glow */
+.logo img {
+  filter: drop-shadow(0 0 3px rgba(176, 139, 54, 0.5)) !important;
+}
+
+/* Labels (Key 1, Key 2, etc.) */
+label {
+  color: var(--text-main) !important;
+}
+
+/* Small helper text under inputs */
+small {
+  color: var(--text-muted) !important;
+}
+
+/* Inputs and textareas – remove blue borders */
+input,
+textarea {
+  border-color: var(--beige-soft) !important;
+}
+
+/* Input focus – brass only (no blue glow) */
+input:focus,
+textarea:focus {
+  border-color: var(--brass-main) !important;
+  box-shadow: 0 0 5px rgba(176, 139, 54, 0.45) !important;
+}
+
+/* Keys number inputs specifically */
+input[type="number"] {
+  color: var(--text-main) !important;
+}
+
+/* Titles and subtitles */
+.title h1,
+.title p,
+h1,
+h2 {
+  color: var(--text-main) !important;
+}
+
+/* Buttons – remove any blue background */
+.btn {
+  background: #e6decd !important;
+  color: var(--text-main) !important;
+  border: 1px solid var(--beige-soft) !important;
+}
+
+.btn:hover {
+  background: #ded4bd !important;
+}
+
+/* Primary button – brass only */
+.btn.primary {
+  background: var(--brass-main) !important;
+  color: #ffffff !important;
+}
+
+.btn.primary:hover {
+  background: var(--brass-dark) !important;
+}
+
+/* Status text */
+.status {
+  color: var(--brass-dark) !important;
+}
+
+/* Remove blue focus ring globally */
+*:focus {
+  outline: none !important;
+}/* =========================================
+   WAR ROOM GREEN THEME
+   Light green inputs + oily green buttons
+   ========================================= */
+
+:root {
+  /* Light green (paper / terminals) */
+  --green-light: #dfeee3;
+  --green-light-border: #b7d2c1;
+  --green-light-text: #1f2f27;
+
+  /* Oily dark green (buttons / machinery) */
+  --green-oily: #2f4f3f;
+  --green-oily-dark: #243b30;
+  --green-oily-border: #3f6b55;
+
+  /* Brass (still used subtly) */
+  --brass-main: #b08b36;
+}
+
+/* ===== ALL INPUT FIELDS (keys + plugboard) ===== */
+input,
+input[type="number"] {
+  background: var(--green-light) !important;
+  color: var(--green-light-text) !important;
+  border: 1px solid var(--green-light-border) !important;
+}
+
+/* ===== ALL TEXTAREAS (message + output) ===== */
+textarea {
+  background: var(--green-light) !important;
+  color: var(--green-light-text) !important;
+  border: 1px solid var(--green-light-border) !important;
+}
+
+/* Placeholder text */
+input::placeholder,
+textarea::placeholder {
+  color: #5f7a6b !important;
+}
+
+/* Focus effect (brass, not blue) */
+input:focus,
+textarea:focus {
+  outline: none !important;
+  border-color: var(--brass-main) !important;
+  box-shadow: 0 0 5px rgba(176, 139, 54, 0.45) !important;
+}
+
+/* ===== BUTTONS (OILY GREEN) ===== */
+.btn,
+.btn.primary {
+  background: var(--green-oily) !important;
+  color: #eaf3ee !important;
+  border: 1px solid var(--green-oily-border) !important;
+  font-weight: 600;
+}
+
+.btn:hover,
+.btn.primary:hover {
+  background: var(--green-oily-dark) !important;
+}
+
+/* Button press effect (mechanical feel) */
+.btn:active,
+.btn.primary:active {
+  transform: translateY(1px);
+}
+
+/* ===== OUTPUT emphasis ===== */
+#output {
+  background: #d6eadc !important;
+  border: 1px solid var(--brass-main) !important;
+}
+
+/* ===== Labels & helper text (no blue) ===== */
+label {
+  color: var(--text-main) !important;
+}
+
+small {
+  color: #5a6f63 !important;
+}
+/* =========================================
+   SEPIA × OLIVE × CHARCOAL THEME
+   Historical / Archival / Academic
+   ========================================= */
+
+:root {
+  /* Backgrounds */
+  --sepia-bg: #f2ede4;        /* aged paper */
+  --sepia-panel: #faf7f2;     /* card background */
+  --sepia-border: #ded6c8;
+
+  /* Text */
+  --text-main: #2b2b2b;       /* charcoal ink */
+  --text-muted: #6b6b6b;
+
+  /* Olive */
+  --olive-main: #4b5320;      /* army olive */
+  --olive-soft: #e6f0df;      /* light olive (inputs) */
+  --olive-border: #b8c2a1;
+
+  /* Accent */
+  --bronze: #6b4f1d;          /* subtle accent */
+}
+
+/* ===== PAGE BACKGROUND ===== */
+body {
+  background: var(--sepia-bg);
+  color: var(--text-main);
+}
+
+/* ===== MAIN CARD ===== */
+.card {
+  background: var(--sepia-panel);
+  border: 1px solid var(--sepia-border);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+}
+
+/* ===== HEADINGS ===== */
+h1, h2 {
+  color: var(--text-main);
+}
+
+h2 {
+  position: relative;
+  margin-bottom: 18px;
+}
+
+h2::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 55px;
+  height: 2px;
+  background: var(--olive-main);
+}
+
+/* ===== LABELS & HELPER TEXT ===== */
+label {
+  color: var(--text-main);
+}
+
+small {
+  color: var(--text-muted);
+}
+
+/* ===== INPUTS (Keys + Plugboard) ===== */
+input,
+input[type="number"] {
+  background: var(--olive-soft);
+  color: var(--text-main);
+  border: 1px solid var(--olive-border);
+}
+
+input::placeholder {
+  color: #7a8463;
+}
+
+/* ===== TEXTAREAS (Message + Output) ===== */
+textarea {
+  background: var(--olive-soft);
+  color: var(--text-main);
+  border: 1px solid var(--olive-border);
+}
+
+textarea::placeholder {
+  color: #7a8463;
+}
+
+/* ===== FOCUS STATE (NO BLUE) ===== */
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--olive-main);
+  box-shadow: 0 0 4px rgba(75, 83, 32, 0.45);
+}
+
+/* ===== BUTTONS (CHARCOAL / OLIVE) ===== */
+.btn,
+.btn.primary {
+  background: var(--olive-main);
+  color: #f7f7f7;
+  border: 1px solid #3e451b;
+  font-weight: 600;
+}
+
+.btn:hover,
+.btn.primary:hover {
+  background: #3e451b;
+}
+
+/* ===== BUTTON PRESS (MECHANICAL FEEL) ===== */
+.btn:active,
+.btn.primary:active {
+  transform: translateY(1px);
+}
+
+/* ===== OUTPUT EMPHASIS ===== */
+#output {
+  background: #edf3e8;
+  border: 1px solid var(--bronze);
+}
+
+/* ===== LOGO (REMOVE ANY BLUE GLOW) ===== */
+.logo {
+  background: var(--sepia-panel);
+  border: 1px solid var(--sepia-border);
+}
+
+.logo img {
+  filter: drop-shadow(0 0 2px rgba(107, 79, 29, 0.5));
+}
+
+/* ===== STATUS TEXT ===== */
+.status {
+  color: var(--olive-main);
+}
+/* =========================================
+   BURGUNDY × PARCHMENT × CHARCOAL THEME
+   Academic • Elegant • Cryptography-safe
+   ========================================= */
+
+:root {
+  /* Backgrounds */
+  --parchment-bg: #f6f1ea;     /* paper background */
+  --parchment-panel: #fbf7f2; /* card */
+  --parchment-border: #e3dacd;
+
+  /* Text */
+  --charcoal-main: #2b2b2b;
+  --charcoal-muted: #6b645b;
+
+  /* Burgundy */
+  --burgundy-main: #6b1e2d;   /* buttons */
+  --burgundy-hover: #541722;
+  --burgundy-accent: #8c2a3a;
+
+  /* Inputs */
+  --input-bg: #efe8df;
+}
+
+/* ===== PAGE BACKGROUND ===== */
+body {
+  background: var(--parchment-bg) !important;
+  color: var(--charcoal-main) !important;
+}
+
+/* ===== MAIN CARD ===== */
+.card {
+  background: var(--parchment-panel) !important;
+  border: 1px solid var(--parchment-border) !important;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.12) !important;
+}
+
+/* ===== HEADINGS ===== */
+h1, h2 {
+  color: var(--charcoal-main) !important;
+}
+
+h2 {
+  position: relative;
+  margin-bottom: 18px;
+}
+
+h2::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 55px;
+  height: 2px;
+  background: var(--burgundy-accent);
+}
+
+/* ===== LABELS & HELPER TEXT ===== */
+label {
+  color: var(--charcoal-main) !important;
+}
+
+small {
+  color: var(--charcoal-muted) !important;
+}
+
+/* ===== INPUTS (Keys + Plugboard) ===== */
+input,
+input[type="number"] {
+  background: var(--input-bg) !important;
+  color: var(--charcoal-main) !important;
+  border: 1px solid var(--parchment-border) !important;
+}
+
+input::placeholder {
+  color: #7a6a63 !important;
+}
+
+/* ===== TEXTAREAS (Message + Output) ===== */
+textarea {
+  background: var(--input-bg) !important;
+  color: var(--charcoal-main) !important;
+  border: 1px solid var(--parchment-border) !important;
+}
+
+textarea::placeholder {
+  color: #7a6a63 !important;
+}
+
+/* ===== FOCUS STATE (BURGUNDY ONLY) ===== */
+input:focus,
+textarea:focus {
+  outline: none !important;
+  border-color: var(--burgundy-accent) !important;
+  box-shadow: 0 0 4px rgba(140, 42, 58, 0.45) !important;
+}
+
+/* ===== BUTTONS (BURGUNDY) ===== */
+.btn,
+.btn.primary {
+  background: var(--burgundy-main) !important;
+  color: #ffffff !important;
+  border: 1px solid var(--burgundy-hover) !important;
+  font-weight: 600;
+}
+
+.btn:hover,
+.btn.primary:hover {
+  background: var(--burgundy-hover) !important;
+}
+
+/* ===== BUTTON PRESS (MECHANICAL FEEL) ===== */
+.btn:active,
+.btn.primary:active {
+  transform: translateY(1px);
+}
+
+/* ===== OUTPUT EMPHASIS ===== */
+#output {
+  background: #f3ede6 !important;
+  border: 1px solid var(--burgundy-accent) !important;
+}
+
+/* ===== LOGO (NO BLUE, SUBTLE SHADOW) ===== */
+.logo {
+  background: var(--parchment-panel) !important;
+  border: 1px solid var(--parchment-border) !important;
+}
+
+.logo img {
+  filter: drop-shadow(0 0 2px rgba(140, 42, 58, 0.4)) !important;
+}
+
+/* ===== STATUS TEXT ===== */
+.status {
+  color: var(--burgundy-main) !important;
+}
