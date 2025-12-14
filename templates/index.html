@@ -59,14 +59,15 @@
         </div>
       </div>
 
-      <!-- Plugboard -->
-      <div class="field">
-        <label for="plugboard">Plugboard (optional)</label>
-        <input id="plugboard" class="plugboard-input"
-       type="text" placeholder="Example: AG TZ MN">
+     <div class="rotor-window">
+  <span class="rw-label">Rotor Window:</span>
+  <span class="rw-box" id="rw1">A</span>
+  <span class="rw-box" id="rw2">A</span>
+  <span class="rw-box" id="rw3">A</span>
 
-        <small>Space-separated pairs (each letter only once)</small>
-      </div>
+  <button class="btn mini" type="button" onclick="randomizeKeys()">🎲 Random Keys</button>
+</div>
+
 
       <!-- INPUT / OUTPUT SIDE BY SIDE -->
       <div class="io-grid">
@@ -128,6 +129,7 @@
 
 </body>
 </html>
+
 
 
 
